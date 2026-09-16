@@ -11,6 +11,9 @@
   --deep: #233f2d;
   --line: #e0e4d7;
   --accent: #dce8b1;
+  --hot: #d8651f;
+  --hot-deep: #b8501a;
+  --hot-ink: #fff4ea;
   --serif: "Fraunces Variable", Georgia, serif;
   font-weight: 400;
   font-size: 14px;
@@ -451,11 +454,14 @@ main {
   min-height: 40px;
 }
 .button.primary {
-  background: #2c513b;
-  color: #f8faed;
+  background: var(--hot);
+  color: var(--hot-ink);
+  box-shadow: 0 6px 18px #d8651f33;
 }
 .button.primary:hover:not(:disabled) {
-  background: #3c6545;
+  background: var(--hot-deep);
+  box-shadow: 0 8px 22px #d8651f45;
+  transform: translateY(-1px);
 }
 .button.secondary {
   background: #fbfcf4;

@@ -8,8 +8,22 @@
   position: absolute;
   inset: -25px;
   background: inherit;
-  filter: blur(22px) brightness(0.38) saturate(0.6);
+  filter: blur(18px) brightness(0.62) saturate(0.85);
   z-index: 0;
+}
+.portrait-video::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to right,
+    rgba(15, 26, 19, 0.55),
+    rgba(15, 26, 19, 0) 18%,
+    rgba(15, 26, 19, 0) 82%,
+    rgba(15, 26, 19, 0.55)
+  );
+  z-index: 0;
+  pointer-events: none;
 }
 .portrait-video video {
   position: relative;
@@ -387,5 +401,98 @@
     width: 100%;
     max-width: 280px;
     height: 142px;
+  }
+}
+
+/* ---- Tracked trajectory overlay + HUD ---- */
+.trajectory-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 2;
+}
+.trajectory-path {
+  fill: none;
+  stroke: var(--hot, #d8651f);
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 6 7;
+  filter: drop-shadow(0 0 6px #d8651f88);
+  opacity: 0;
+  animation: lens-arc-in 1.1s ease-out 0.25s forwards;
+}
+.trajectory-dot {
+  fill: #fff3e6;
+  stroke: var(--hot, #d8651f);
+  stroke-width: 1.6;
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: lens-pop 0.45s cubic-bezier(0.2, 0.9, 0.3, 1.3) forwards;
+}
+.trajectory-apex-group {
+  opacity: 0;
+  animation: lens-fade 0.5s ease-out forwards;
+}
+.trajectory-apex {
+  fill: none;
+  stroke: var(--hot, #d8651f);
+  stroke-width: 1.6;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: lens-pulse 1.9s ease-in-out infinite;
+}
+.trajectory-hud rect {
+  fill: #0f1d15e6;
+  stroke: #ffffff22;
+  stroke-width: 1;
+}
+.trajectory-hud text {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  fill: #f2f5e8;
+}
+.trajectory-hud .hud-eyebrow {
+  font-size: 10px;
+  letter-spacing: 1.4px;
+  fill: #ffb27a;
+}
+.trajectory-hud .hud-value {
+  font-size: 12.5px;
+  letter-spacing: 0.2px;
+}
+.trajectory-hud-corner {
+  opacity: 0;
+  animation: lens-fade 0.5s ease-out 0.6s forwards;
+}
+@keyframes lens-arc-in {
+  from { opacity: 0; stroke-dashoffset: 260; }
+  to { opacity: 1; stroke-dashoffset: 0; }
+}
+@keyframes lens-pop {
+  from { opacity: 0; transform: scale(0.2); }
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes lens-fade {
+  to { opacity: 1; }
+}
+@keyframes lens-pulse {
+  0%, 100% { transform: scale(0.75); opacity: 0.9; }
+  50% { transform: scale(1.35); opacity: 0.25; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .trajectory-path,
+  .trajectory-dot,
+  .trajectory-apex-group,
+  .trajectory-hud-corner {
+    animation: none;
+    opacity: 1;
+    stroke-dashoffset: 0;
+    transform: none;
+  }
+  .trajectory-apex {
+    animation: none;
   }
 }

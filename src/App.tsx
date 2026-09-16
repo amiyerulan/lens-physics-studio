@@ -472,11 +472,12 @@ export default function App() {
                     <em>physics lab.</em>
                   </h1>
                   <p>
-                    One basketball shot. A different way to understand motion.
+                    Record an everyday moment. Lens spots the physics in it and
+                    turns it into a short guided lesson.
                   </p>
                 </div>
                 <button
-                  className="button secondary upload-button"
+                  className="button primary upload-button"
                   onClick={() => setModal("upload")}
                 >
                   <Plus size={16} /> Add a recording
@@ -487,12 +488,12 @@ export default function App() {
                   <Sparkles size={18} />
                 </span>
                 <p>
-                  <strong>A little context. A new connection.</strong> Watch an
-                  event, think with your coach, then test the physics for
-                  yourself.
+                  <strong>How it works.</strong> 1 · Record a moment &nbsp;
+                  2 · Lens finds the physics &nbsp; 3 · Predict, test, explain
+                  — then save what you learned.
                 </p>
                 <button onClick={() => navigate("guide")}>
-                  Meet Lens <ArrowUpRight size={15} />
+                  Learn more <ArrowUpRight size={15} />
                 </button>
               </div>
               <div className="daily-layout">
@@ -589,7 +590,7 @@ export default function App() {
                   <div className="moments-section">
                     <div className="section-heading">
                       <h2>
-                        One shot. <em>A new way to see.</em>
+                        Physics moments <em>in this recording.</em>
                       </h2>
                       <span>
                         {isDemo ? "FROM THE COURT" : "FROM YOUR RECORDING"}
