@@ -1,5 +1,5 @@
 /* =====================================================================
-   LENS · light theme layer (loaded last). Navy ink, cobalt interface
+   MOMENTUM · light theme layer (loaded last). Navy ink, cobalt interface
    accent, orange reserved for physics data (arc, pins, HUD).
    ===================================================================== */
 :root {
@@ -24,6 +24,14 @@ body { background-image: none !important; }
   text-transform: uppercase; color: var(--blue) !important; }
 .brand > span:last-child { color: var(--ink) !important; } .brand-period { color: var(--blue) !important; }
 .lens-mark > span { border-color: var(--blue) !important; } .brand-caption { color: var(--muted) !important; }
+/* momentum brand mark: trail builds toward a solid lead + orange spark */
+.momentum-mark { width: 33px; height: 33px; flex: none; display: block; }
+.momentum-mark.small { width: 21px; height: 21px; }
+.momentum-trail-1 { fill: var(--blue); opacity: 0.22; }
+.momentum-trail-2 { fill: var(--blue); opacity: 0.42; }
+.momentum-trail-3 { fill: var(--blue); opacity: 0.68; }
+.momentum-lead { fill: var(--blue); }
+.momentum-spark { fill: var(--hot); }
 /* sidebar */
 .sidebar { background: #ffffff !important; border-right: 1px solid var(--line) !important; }
 .sidebar nav > button { color: #425466 !important; }

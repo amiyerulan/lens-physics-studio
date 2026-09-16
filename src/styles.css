@@ -3031,8 +3031,8 @@ details summary {
   .profile-dot {
     display: none;
   }
-  .brand .lens-mark {
-    transform: scale(0.9);
+  .brand .momentum-mark {
+    transform: scale(0.8);
   }
   .sidebar nav {
     margin-top: 42px;
