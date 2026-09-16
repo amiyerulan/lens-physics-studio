@@ -1,5 +1,5 @@
 :root {
-  font-family: "DM Sans Variable", "DM Sans", sans-serif;
+  font-family: "Source Sans 3", system-ui, -apple-system, "Segoe UI", sans-serif;
   color: #253e32;
   background: #f8f8f2;
   font-synthesis: none;
@@ -1568,12 +1568,12 @@ main {
   max-height: 320px;
 }
 .svg-small {
-  font-family: "DM Sans Variable", sans-serif;
+  font-family: "Source Code Pro", ui-monospace, Menlo, monospace;
   font-size: 10px;
   fill: #889775;
 }
 .svg-label {
-  font-family: "DM Sans Variable", sans-serif;
+  font-family: "Source Code Pro", ui-monospace, Menlo, monospace;
   font-size: 13px;
   fill: #5b7850;
 }
@@ -1630,8 +1630,8 @@ main {
 }
 .simulation-result strong span {
   font:
-    10px "DM Sans Variable",
-    sans-serif;
+    10px "Source Code Pro",
+    monospace;
   color: #81986a;
 }
 .simulation-result .button {
@@ -1675,7 +1675,7 @@ main {
   display: block;
 }
 .torque-readout strong > small {
-  font-family: "DM Sans Variable", sans-serif;
+  font-family: "Source Code Pro", ui-monospace, Menlo, monospace;
   font-size: 11px;
   color: #839665;
   font-weight: 400;
@@ -2240,7 +2240,7 @@ main {
 }
 .review-stats small {
   display: block;
-  font-family: "DM Sans Variable", sans-serif;
+  font-family: "Source Code Pro", ui-monospace, Menlo, monospace;
   font-size: 8px;
   color: #9bab85;
   line-height: 1.7;

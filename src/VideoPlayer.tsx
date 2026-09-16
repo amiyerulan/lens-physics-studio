@@ -326,7 +326,7 @@ export default function VideoPlayer({
                   y={a.y < 0.12 ? 39 : -19}
                   fill="#f7f7e7"
                   fontSize="14"
-                  fontFamily="DM Sans,sans-serif"
+                  fontFamily="Source Sans 3,sans-serif"
                 >
                   {a.label}
                 </text>
