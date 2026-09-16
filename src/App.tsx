@@ -89,7 +89,7 @@ export default function App() {
     [moments, setMoments] = useState<Moment[]>(DEMO_MOMENTS),
     [selected, setSelected] = useState("shot"),
     [src, setSrc] = useState("/demo/basketball-shot.mp4"),
-    [fileName, setFileName] = useState("A shot on the court"),
+    [fileName, setFileName] = useState("Sample: basketball shot"),
     [isDemo, setIsDemo] = useState(true),
     [seek, setSeek] = useState({ time: 14.2, nonce: 0 }),
     [rate, setRate] = useState(1),
@@ -234,7 +234,7 @@ export default function App() {
       objectUrl.current = "";
     }
     setSrc("/demo/basketball-shot.mp4");
-    setFileName("A shot on the court");
+    setFileName("Sample: basketball shot");
     setIsDemo(true);
     setMoments(DEMO_MOMENTS);
     setSelected("shot");
@@ -340,6 +340,11 @@ export default function App() {
       setStage("idle");
     }
   }
+  const timelineEnd = Math.max(
+    isDemo ? 48.6 : 0,
+    ...moments.map((m) => m.end),
+    1,
+  );
   const navItems = [
     { id: "today", label: "Your day", icon: Eye },
     { id: "course", label: "Your course", icon: BookOpen },
@@ -462,39 +467,53 @@ export default function App() {
             <div className="day-page page-enter">
               <div className="page-heading">
                 <div>
-                  <div className="eyebrow heading-eyebrow">
-                    <span className="tiny-sun">✳</span> YOUR EVERYDAY,
-                    RECONSIDERED
-                  </div>
                   <h1>
-                    The world is your
+                    Any recording.
                     <br />
-                    <em>physics lab.</em>
+                    <em>The physics inside it.</em>
                   </h1>
                   <p>
-                    Record an everyday moment. Lens spots the physics in it and
-                    turns it into a short guided lesson.
+                    A door, a swing, a bike, a ball — drop in a clip of anything.
+                    Lens finds the physics in it and turns it into a short
+                    lesson:{" "}
+                    <span className="how-steps">
+                      <b>predict</b> · <b>test</b> · <b>explain</b>
+                    </span>
                   </p>
                 </div>
-                <button
-                  className="button primary upload-button"
-                  onClick={() => setModal("upload")}
-                >
-                  <Plus size={16} /> Add a recording
-                </button>
               </div>
-              <div className="lens-introduction">
-                <span className="intro-mark">
-                  <Sparkles size={18} />
-                </span>
-                <p>
-                  <strong>How it works.</strong> 1 · Record a moment &nbsp;
-                  2 · Lens finds the physics &nbsp; 3 · Predict, test, explain
-                  — then save what you learned.
-                </p>
-                <button onClick={() => navigate("guide")}>
-                  Learn more <ArrowUpRight size={15} />
+              <div className="intake">
+                <button
+                  className="dropzone"
+                  onClick={() => fileInput.current?.click()}
+                  onDragOver={(e) => e.preventDefault()}
+                  onDrop={(e) => {
+                    e.preventDefault();
+                    openFile(e.dataTransfer.files?.[0]);
+                  }}
+                >
+                  <span className="dropzone-icon">
+                    <Upload size={26} strokeWidth={1.5} />
+                  </span>
+                  <strong>Drop a recording here</strong>
+                  <span>
+                    or browse · MP4, WebM, MOV · the full video stays on your
+                    device
+                  </span>
                 </button>
+                <div className="samples">
+                  <span className="samples-label">Or try a sample</span>
+                  <button
+                    className={`sample-tile ${isDemo ? "active" : ""}`}
+                    onClick={useDemo}
+                  >
+                    <img src="/demo/shot-poster.jpg" alt="" />
+                    <span>
+                      <strong>Basketball shot</strong>
+                      <small>projectile motion · 49 s</small>
+                    </span>
+                  </button>
+                </div>
               </div>
               <div className="daily-layout">
                 <section className="day-recording">
@@ -504,14 +523,12 @@ export default function App() {
                       <strong>{fileName}</strong>
                       <span className="quiet-label">
                         {isDemo
-                          ? "Your basketball clip · 49 seconds"
-                          : "Local recording"}
+                          ? "Sample recording · 49 s"
+                          : "Your recording"}
                       </span>
                     </div>
                     <span className="source-tag">
-                      {isDemo
-                        ? "1 guided investigation"
-                        : `${moments.length} AI suggestions`}
+                      {isDemo ? "Sample" : "Analyzed by Lens"}
                     </span>
                   </div>
                   <VideoPlayer
@@ -588,13 +605,38 @@ export default function App() {
                     </div>
                   )}
                   <div className="moments-section">
-                    <div className="section-heading">
-                      <h2>
-                        Physics moments <em>in this recording.</em>
-                      </h2>
-                      <span>
-                        {isDemo ? "FROM THE COURT" : "FROM YOUR RECORDING"}
-                      </span>
+                    <div className="timeline">
+                      <div className="timeline-head">
+                        <strong>
+                          {moments.length}{" "}
+                          {moments.length === 1 ? "moment" : "moments"} found
+                        </strong>
+                        <span>
+                          0:00 – {formatTime(timelineEnd)}
+                          {isDemo ? " · tracked by Lens" : " · AI suggested"}
+                        </span>
+                      </div>
+                      <div
+                        className="timeline-track"
+                        role="list"
+                        aria-label="Detected moments on the recording timeline"
+                      >
+                        {moments.map((m, i) => (
+                          <button
+                            key={m.id}
+                            role="listitem"
+                            className={`timeline-pin ${selected === m.id ? "selected" : ""}`}
+                            style={{
+                              left: `${Math.min(97, Math.max(3, (m.time / timelineEnd) * 100))}%`,
+                            }}
+                            onClick={() => selectMoment(m)}
+                            aria-label={`${m.shortTitle} at ${formatTime(m.time)}`}
+                          >
+                            <span className="pin-head">0{i + 1}</span>
+                            <span className="pin-time">{formatTime(m.time)}</span>
+                          </button>
+                        ))}
+                      </div>
                     </div>
                     <div className="moment-list">
                       {moments.map((m, i) => (
@@ -662,23 +704,22 @@ export default function App() {
                         <div className="invitation-eyebrow">
                           <LensMark small />
                           <span>
-                            {invitation
-                              ? "A MOMENT JUST OPENED UP"
-                              : "A DIFFERENT WAY TO SEE"}
+                            {invitation ? "JUST NOTICED" : "UP NEXT"} ·{" "}
+                            {formatTime(moment.time)} ·{" "}
+                            {moment.concept === "projectile"
+                              ? "PROJECTILE MOTION"
+                              : moment.concept === "torque"
+                                ? "TORQUE"
+                                : moment.concept === "force"
+                                  ? "NET FORCE"
+                                  : "EQUILIBRIUM"}
                           </span>
                         </div>
-                        <span className="moment-concept">
-                          {moment.concept === "projectile"
-                            ? "One shot. A surprising question."
-                            : moment.concept === "torque"
-                              ? "01 force. One turning point."
-                              : moment.concept === "force"
-                                ? "In motion. Worth a pause."
-                                : "A little balance. A big idea."}
-                        </span>
                         <h2>
-                          {moment.concept === "projectile"
-                            ? "At the highest point, does gravity take a break?"
+                          {moment.source === "bedrock"
+                            ? moment.title
+                            : moment.concept === "projectile"
+                              ? "At the highest point, does gravity take a break?"
                             : moment.concept === "torque"
                               ? "Why is the handle so far from the hinge?"
                               : moment.concept === "force"
